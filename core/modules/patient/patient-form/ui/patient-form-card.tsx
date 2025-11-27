@@ -52,8 +52,8 @@ const PatientFormCard = () => {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <Card className="w-full max-w-sm md:max-w-lg">
-          <CardHeader className="flex justify-center items-center">
-            <h1 className="font-bold text-xl">เข้าสู่ระบบ</h1>
+          <CardHeader className="w-full">
+            <h1 className="font-bold text-xl">ข้อมูลผู้ป่วย</h1>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <FormField
@@ -241,7 +241,9 @@ const PatientFormCard = () => {
             />
           </CardContent>
           <CardFooter className="flex justify-center w-full">
-            <Button className="w-full bg-green-700 font-bold ">บันทึก</Button>
+            <Button className="w-full cursor-pointer bg-green-600  hover:bg-green-700 font-bold ">
+              บันทึก
+            </Button>
           </CardFooter>
         </Card>
       </form>

@@ -20,8 +20,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Required from '@/components/ui/required';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const HomeMenu = () => {
+  const router = useRouter();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -46,14 +48,16 @@ const HomeMenu = () => {
       data.username === userData.patient.username &&
       data.password === userData.patient.password
     ) {
-      console.log('Logged in as patient');
+      alert('Logged in as patient');
+      router.push('/patient');
     } else if (
       data.username === userData.staff.username &&
       data.password === userData.staff.password
     ) {
-      console.log('Logged in as staff');
+      alert('Logged in as staff');
+      router.push('/staff');
     } else {
-      console.log('Invalid credentials');
+      alert('Invalid credentials');
     }
   };
 
@@ -102,7 +106,9 @@ const HomeMenu = () => {
             />
           </CardContent>
           <CardFooter className="flex justify-center w-full">
-            <Button className="w-full">เข้าสู่ระบบ</Button>
+            <Button className="w-full bg-green-600 hover:bg-green-700 cursor-pointer">
+              เข้าสู่ระบบ
+            </Button>
           </CardFooter>
         </Card>
       </form>

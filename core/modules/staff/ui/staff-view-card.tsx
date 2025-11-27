@@ -9,8 +9,13 @@ import {
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import Required from '@/components/ui/required';
+import { useRouter } from 'next/navigation';
 
 const StaffView = () => {
+  const router = useRouter();
+  const logout = () => {
+    router.push('/');
+  };
   return (
     <div className="flex justify-center items-center w-full">
       <Card className="w-full max-w-sm md:max-w-xl">
@@ -88,7 +93,10 @@ const StaffView = () => {
           </div>
         </CardContent>
         <CardFooter className="mt-1">
-          <Button className="w-full bg-destructive font-bold text-lg">
+          <Button
+            className="w-full cursor-pointer bg-red-600 font-bold  hover:bg-red-700"
+            onClick={logout}
+          >
             ออกจากระบบ
           </Button>
         </CardFooter>
