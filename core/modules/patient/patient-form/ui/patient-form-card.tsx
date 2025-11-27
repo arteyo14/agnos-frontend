@@ -21,8 +21,11 @@ import { Input } from '@/components/ui/input';
 import Required from '@/components/ui/required';
 import { Textarea } from '@/components/ui/text-area';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const PatientFormCard = () => {
+  const router = useRouter();
+
   const form = useForm<PatientFormSchema>({
     resolver: zodResolver(patientFormSchema),
     defaultValues: {
@@ -44,6 +47,8 @@ const PatientFormCard = () => {
   const onSubmit = (data: PatientFormSchema) => {
     console.log('Patient Form Data:', data);
   };
+
+  const onCancel = () => router.push('/');
 
   return (
     <Form {...form}>
@@ -240,7 +245,13 @@ const PatientFormCard = () => {
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-center w-full">
+          <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Button
+              className="w-full cursor-pointer bg-red-600  hover:bg-red-700 font-bold "
+              onClick={onCancel}
+            >
+              ยกเลิก
+            </Button>
             <Button className="w-full cursor-pointer bg-green-600  hover:bg-green-700 font-bold ">
               บันทึก
             </Button>
