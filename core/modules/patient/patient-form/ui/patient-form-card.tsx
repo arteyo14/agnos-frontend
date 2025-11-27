@@ -22,6 +22,8 @@ import Required from '@/components/ui/required';
 import { Textarea } from '@/components/ui/text-area';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { CalendarPicker } from '@/components/ui/custom/input/date-picker';
 
 const PatientFormCard = () => {
   const router = useRouter();
@@ -116,7 +118,14 @@ const PatientFormCard = () => {
                     <Required />
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} type="text" />
+                    <CalendarPicker
+                      value={field.value ? new Date(field.value) : undefined}
+                      onChange={(date) =>
+                        field.onChange(date ? date.toISOString() : '')
+                      }
+                      placeholder="เลือกวันเกิด"
+                      className="w-full"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,7 +141,24 @@ const PatientFormCard = () => {
                     <Required />
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} type="text" />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex space-x-2"
+                    >
+                      <FormItem className="flex items-center space-x-2">
+                        <RadioGroupItem value="male" id="male" />
+                        <FormLabel htmlFor="male" className="font-normal">
+                          ชาย
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2">
+                        <RadioGroupItem value="female" id="female" />
+                        <FormLabel htmlFor="female" className="font-normal">
+                          หญิง
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,22 +191,6 @@ const PatientFormCard = () => {
                   </FormLabel>
                   <FormControl>
                     <Input {...field} type="text" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem className=" md:col-span-2">
-                  <FormLabel>
-                    ที่อยู่
-                    <Required />
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -239,6 +249,22 @@ const PatientFormCard = () => {
                   <FormLabel>ศาสนา</FormLabel>
                   <FormControl>
                     <Input {...field} type="text" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className=" md:col-span-2">
+                  <FormLabel>
+                    ที่อยู่
+                    <Required />
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
