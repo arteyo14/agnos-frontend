@@ -1,7 +1,7 @@
-import PatientView from '@/core/modules/patient/patient-form/ui/patient-view';
+import PatientFormCard from '@/core/modules/patient/patient-form/ui/patient-form-card';
 
 const PatientPage = () => {
-  return <PatientView />;
+  return <PatientFormCard />;
 };
 
 export default PatientPage;

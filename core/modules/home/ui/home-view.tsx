@@ -4,7 +4,7 @@ import HomeMenu from './home-menu';
 
 const HomeView = () => {
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center">
+    <div>
       <HomeMenu />
     </div>
   );

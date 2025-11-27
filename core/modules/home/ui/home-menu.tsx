@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import { loginSchema, LoginSchemaType } from '../schema/schema';
+import { loginSchema, LoginSchemaType } from '../schema/home-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Required from '@/components/ui/required';
 import { Input } from '@/components/ui/input';
