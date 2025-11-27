@@ -1,7 +1,7 @@
-import StaffView from '@/core/modules/staff/ui/staff-view';
+import HomeView from '@/core/modules/home/ui/home-view';
 
-const StaffPage = () => {
-  return <StaffView />;
+const HomePage = () => {
+  return <HomeView />;
 };
 
-export default StaffPage;
+export default HomePage;

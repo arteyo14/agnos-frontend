@@ -1,4 +1,4 @@
-import PatientView from '@/core/modules/patient/ui/patient-view';
+import PatientView from '@/core/modules/patient/patient-form/ui/patient-view';
 
 const PatientPage = () => {
   return <PatientView />;
