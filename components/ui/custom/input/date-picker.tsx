@@ -11,12 +11,14 @@ import {
 } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 interface CalendarPickerProps {
   value?: Date;
   onChange?: (date: Date | undefined) => void;
   placeholder?: string;
   className?: string;
+  hasError?: boolean;
 }
 
 export const CalendarPicker: React.FC<CalendarPickerProps> = ({
@@ -24,6 +26,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
   onChange,
   placeholder = 'เลือกวันที่',
   className = 'w-48',
+  hasError = false,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
@@ -46,7 +49,11 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
         <Button
           variant="outline"
           id="date"
-          className={`justify-between font-normal ${className}`}
+          className={cn(
+            'justify-between font-normal',
+            className,
+            hasError && 'border-red-500 focus-visible:ring-red-500'
+          )}
         >
           {selectedDate
             ? format(selectedDate, 'dd MMMM yyyy', { locale: th })

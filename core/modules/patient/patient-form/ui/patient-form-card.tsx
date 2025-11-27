@@ -123,6 +123,7 @@ const PatientFormCard = () => {
                       onChange={(date) =>
                         field.onChange(date ? date.toISOString() : '')
                       }
+                      hasError={!!form.formState.errors.birthdate}
                       placeholder="เลือกวันเกิด"
                       className="w-full"
                     />
