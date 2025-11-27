@@ -12,7 +12,18 @@ Built with **Next.js 15**, **TypeScript**, and **TailwindCSS**.
 | **Frontend (Next.js)**                  | https://agnos-test-pi.vercel.app/             |
 | **Socket Server (Express + Socket.IO)** | https://agnos-socket-production.up.railway.app |
 
----
+
+### 🔐 Demo Accounts
+
+| Role | Username | Password |
+|------|-----------|-----------|
+| 🩺 **Staff (Viewer)** | staff1 | P@ssword! |
+| 👤 **Patient (Form User)** | patient1 | P@ssword! |
+
+> **Note:**  
+> The authentication shown here is for **demonstration purposes only**.  
+> These accounts and credentials are **mock users** created solely to illustrate the **real-time synchronization flow** between patient and staff dashboards.  
+> No actual authentication, data protection, or secure storage mechanisms have been implemented in this prototype version.
 
 ## 🧩 Features
 
