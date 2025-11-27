@@ -135,7 +135,7 @@ const PatientFormCard = () => {
             />
             <FormField
               control={form.control}
-              name="gender"
+              name="phone_no"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>

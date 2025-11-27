@@ -1,4 +1,4 @@
-import StaffView from '@/core/modules/staff/ui/staff-view';
+import StaffView from '@/core/modules/staff/ui/staff-view-card';
 
 const StaffPage = () => {
   return <StaffView />;
