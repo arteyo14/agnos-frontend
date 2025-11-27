@@ -39,7 +39,7 @@ const HomeMenu = () => {
     },
     staff: {
       username: 'staff1',
-      password: 'St@ff1234',
+      password: 'P@ssw0rd!',
     },
   };
 
