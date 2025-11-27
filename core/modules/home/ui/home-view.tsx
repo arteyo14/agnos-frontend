@@ -3,10 +3,6 @@
 import HomeMenu from './home-menu';
 
 const HomeView = () => {
-  return (
-    <div>
-      <HomeMenu />
-    </div>
-  );
+  return <HomeMenu />;
 };
 export default HomeView;

@@ -1,5 +1,5 @@
-import HomeView from '@/core/modules/home/ui/home-view';
+import HomeMenu from '@/core/modules/home/ui/home-menu';
 
 export default function Home() {
-  return <HomeView />;
+  return <HomeMenu />;
 }
