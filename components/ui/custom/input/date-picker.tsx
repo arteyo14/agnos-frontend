@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 interface CalendarPickerProps {
   value?: Date;
   onChange?: (date: Date | undefined) => void;
+  onBlur?: () => void;
   placeholder?: string;
   className?: string;
   hasError?: boolean;
@@ -27,6 +28,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
   placeholder = 'เลือกวันที่',
   className = 'w-48',
   hasError = false,
+  onBlur = () => {},
 }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
@@ -67,6 +69,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
           selected={selectedDate}
           captionLayout="dropdown"
           onSelect={handleSelect}
+          onDayBlur={onBlur}
           disabled={(date) => date > new Date()}
         />
       </PopoverContent>
