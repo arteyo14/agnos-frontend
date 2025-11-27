@@ -41,6 +41,7 @@ Built with **Next.js 15**, **TypeScript**, and **TailwindCSS**.
 ---
 
 ## 📂 Project Structure
+```
 src/
 ├── app/
 │   ├──(root)
@@ -73,3 +74,4 @@ src/
 │
 └── styles/
 └── globals.css
+```
