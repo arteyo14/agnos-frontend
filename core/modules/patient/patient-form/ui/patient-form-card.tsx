@@ -248,6 +248,7 @@ const PatientFormCard = () => {
           <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Button
               className="w-full cursor-pointer bg-red-600  hover:bg-red-700 font-bold "
+              type="button"
               onClick={onCancel}
             >
               ยกเลิก
