@@ -9,16 +9,21 @@ import {
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import Required from '@/components/ui/required';
+import { buddhistFormatDate } from '@/lib/formate-date';
 import { socket } from '@/lib/socket';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type TypingData = {
-  [field: string]: string;
+  [field: string]: {
+    value: string;
+    is_typing: boolean;
+  };
 };
 
 const StaffView = () => {
-  const [typingStatus, setTypingStatus] = useState<boolean>(false);
+  const [typingStatus, setTypingStatus] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [data, setData] = useState<TypingData>({});
 
   const patientId = 'cb05a27b-9155-42d8-acc9-47891b71f74a';
@@ -35,17 +40,36 @@ const StaffView = () => {
       setTypingStatus(is_typing);
       setData((prev) => ({
         ...prev,
-        [field]: value,
+        [field]: {
+          value: value,
+          is_typing: is_typing,
+        },
       }));
     });
 
     socket.on('typing:update', ({ is_typing }) => {
       setTypingStatus(is_typing);
+      setData((prev) => ({
+        ...prev,
+        ...Object.fromEntries(
+          Object.entries(prev).map(([field, info]) => [
+            field,
+            { ...info, is_typing: is_typing },
+          ])
+        ),
+      }));
+    });
+
+    socket.on('form:submitted', () => {
+      setIsSubmit(true);
+      console.log('Form submitted by patient');
+      alert('ผู้ป่วยได้ทำการส่งแบบฟอร์มเรียบร้อยแล้ว');
     });
 
     return () => {
       socket.off('typing');
       socket.off('typing:update');
+      socket.off('form:submit');
     };
   }, []);
   return (
@@ -53,81 +77,235 @@ const StaffView = () => {
       <Card className="w-full max-w-sm md:max-w-xl">
         <CardHeader className="flex justify-between w-full ">
           <h1 className="font-bold text-xl">ข้อมูลผู้ป่วย</h1>
-          <span>สถานะ {typingStatus ? 'กำลังพิมพ์...' : 'นิ่ง'}</span>
+          <span>
+            สถานะ{' '}
+            {typingStatus
+              ? 'กำลังพิมพ์...'
+              : isSubmit
+              ? 'บันทึกข้อมูลเรียบร้อยแล้ว'
+              : 'นิ่ง'}
+          </span>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <Label className="font-semibold">
               ชื่อจริง <Required />
             </Label>
-            <p>{data['firstname'] || '-'}</p>
+            {data['firstname']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['firstname']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">ชื่อกลาง</Label>
-            <p>{data['middlename'] || '-'}</p>
+            {data['middlename']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['middlename']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               นามสกุล <Required />
             </Label>
-            <p>{data['lastname'] || '-'}</p>
+            {data['lastname']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['lastname']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               วันเกิด <Required />
             </Label>
-            <p>{data['birthdate'] || '-'}</p>
+            {data['birthdate']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>
+                {buddhistFormatDate(data['birthdate']?.value, 'dd mmmm yyyy') ||
+                  '-'}
+              </p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               เพศ <Required />
             </Label>
-            <p>
-              {data['gender']
-                ? data['gender'] === 'male'
-                  ? 'ชาย'
-                  : 'หญิง'
-                : '-'}
-            </p>
+            {data['gender']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>
+                {data['gender']
+                  ? data['gender']?.value === 'male'
+                    ? 'ชาย'
+                    : 'หญิง'
+                  : '-'}
+              </p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               เบอร์โทรศัพท์ <Required />
             </Label>
-            <p>{data['phone_no'] || '-'}</p>
+            {data['phone_no']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['phone_no']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               อีเมล <Required />
             </Label>
-            <p>{data['email'] || '-'}</p>
+            {data['email']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['email']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               ภาษาที่ต้องการ <Required />
             </Label>
-            <p>{data['preferred_languange'] || '-'}</p>
+            {data['preferred_languange']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['preferred_languange']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">
               สัญชาติ
               <Required />
             </Label>
-            <p>{data['nationality'] || '-'}</p>
+            {data['nationality']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['nationality']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">ติดต่อฉุกเฉิน</Label>
-            <p>{data['emergency_contact'] || '-'}</p>
+            {data['emergency_contact']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['emergency_contact']?.value || '-'}</p>
+            )}
           </div>
           <div>
             <Label className="font-semibold">ศาสนา</Label>
-            <p>{data['religion'] || '-'}</p>
+            {data['religion']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['religion']?.value || '-'}</p>
+            )}
           </div>
           <div className="col-span-1 md:col-span-2">
             <Label className="font-semibold">
               ที่อยู่ <Required />
             </Label>
-            <p>{data['address'] || '-'}</p>
+            {data['address']?.is_typing ? (
+              <p className="flex gap-0.5 text-gray-600 items-center">
+                <span className="animate-bounce [animation-delay:-0.3s]">
+                  .
+                </span>
+                <span className="animate-bounce [animation-delay:-0.15s]">
+                  .
+                </span>
+                <span className="animate-bounce">.</span>
+              </p>
+            ) : (
+              <p>{data['address']?.value || '-'}</p>
+            )}
           </div>
         </CardContent>
         <CardFooter className="mt-1">

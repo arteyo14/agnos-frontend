@@ -50,7 +50,8 @@ const PatientFormCard = () => {
   });
 
   const onSubmit = (data: PatientFormSchema) => {
-    console.log('Patient Form Data:', data);
+    socket.emit('form:submit', { patient_id: patientId, form_data: data });
+    alert('ทำรายการสำเร็จ');
   };
 
   const onCancel = () => router.push('/');

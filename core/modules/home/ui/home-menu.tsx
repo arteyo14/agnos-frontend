@@ -63,11 +63,8 @@ const HomeMenu = () => {
 
   return (
     <Form {...form}>
-      <form
-        className="w-full flex flex-col justify-center items-center space-y-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <Card className="w-full max-w-sm md:max-w-lg">
+      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+        <Card className="w-full max-w-sm md:max-w-xl">
           <CardHeader className="flex justify-center items-center">
             <h1 className="font-bold text-xl">เข้าสู่ระบบ</h1>
           </CardHeader>
