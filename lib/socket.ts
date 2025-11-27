@@ -1,7 +1,8 @@
 import { io } from 'socket.io-client';
 
-const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL;
-
-export const socket = io(socketURL as string, {
-  transports: ['websocket'],
-});
+export const socket = io(
+  'https://agnos-socket-production.up.railway.app' as string,
+  {
+    transports: ['websocket'],
+  }
+);
